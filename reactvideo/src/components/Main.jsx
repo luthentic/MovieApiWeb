@@ -2,18 +2,22 @@ import axios from "axios"
 import React, { useEffect, useState } from "react"
 import requests from "../Requests"
 
+// Main component
 const Main = () => {
+  // Initializing the state for the movies array
   const [movies, setMovies] = useState([])
 
+  // Selecting a random movie from the movies array
   const movie = movies[Math.floor(Math.random() * movies.length)]
 
+  // Fetching the popular movies data using the useEffect hook
   useEffect(() => {
     axios.get(requests.requestPopular).then((response) => {
       setMovies(response.data.results)
     })
   }, [])
-  //   console.log(movie);
 
+  // Truncating the movie overview to a certain length
   const truncateString = (str, num) => {
     if (str?.length > num) {
       return str.slice(0, num) + "..."
@@ -45,7 +49,7 @@ const Main = () => {
             Released: {movie?.release_date}
           </p>
           <p className="w-full md:max-w-[70%] lg:max-w-[50%] xl:max-w-[35%] text-gray-200">
-            {truncateString(movie?.overview, 150)}
+            {truncateString(movie?.overview, 400)}
           </p>
         </div>
       </div>

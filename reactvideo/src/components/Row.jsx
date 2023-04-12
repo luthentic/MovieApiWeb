@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react"
 import axios from "axios"
+import React, { useEffect, useState } from "react"
 import Movie from "./Movie"
 import { MdChevronLeft, MdChevronRight } from "react-icons/md"
 
@@ -7,8 +7,8 @@ const Row = ({ title, fetchURL, rowID }) => {
   const [movies, setMovies] = useState([])
 
   useEffect(() => {
-    axios.get(fetchURL).then((res) => {
-      setMovies(res.data.results)
+    axios.get(fetchURL).then((response) => {
+      setMovies(response.data.results)
     })
   }, [fetchURL])
 
@@ -20,8 +20,6 @@ const Row = ({ title, fetchURL, rowID }) => {
     var slider = document.getElementById("slider" + rowID)
     slider.scrollLeft = slider.scrollLeft + 500
   }
-
-  console.log(movies)
 
   return (
     <>
@@ -36,15 +34,9 @@ const Row = ({ title, fetchURL, rowID }) => {
           id={"slider" + rowID}
           className="w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative"
         >
-          {movies ? (
-            <div>
-              {movies.map((item, id) => (
-                <Movie key={id} item={item} />
-              ))}
-            </div>
-          ) : (
-            <div>Loading...</div>
-          )}
+          {movies.map((item, id) => (
+            <Movie key={id} item={item} />
+          ))}
         </div>
         <MdChevronRight
           onClick={slideRight}
